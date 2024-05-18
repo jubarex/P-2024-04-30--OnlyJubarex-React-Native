@@ -1,5 +1,6 @@
 foi editado beleza 03/05//2024
 agr vai ser editado com branch nova
+semana acad
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
