@@ -75,6 +75,18 @@ export default function TabLayout() {
           ),
         }}
       />
+      <Tabs.Screen
+        name="TutorialTela"
+        options={{
+          title: "Tutorial",
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon
+              name={focused ? "person" : "person-outline"}
+              color={color}
+            />
+          ),
+        }}
+      />
     </Tabs>
   );
 }

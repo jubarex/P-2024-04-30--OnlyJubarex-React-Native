@@ -1,84 +1,87 @@
 import React from "react";
-import { View, Text, Image } from "react-native";
+import { Image } from "react-native";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
+import { StyleSheet } from "react-native";
 
 const TelaPerfil = () => {
   return (
-    <View
-      style={{
-        flexDirection: "row",
-        height: 100,
-        padding: 20,
-        backgroundColor: "white",
-      }}
-    >
-      <View>
+    <ThemedView style={[styles.container, { marginTop: 35 }]}>
+      <ThemedView>
         <>
-          <Text>Botão Voltar</Text>
+          <ThemedText>Botão Voltar</ThemedText>
         </>
-      </View>
-      <View>
+      </ThemedView>
+      <ThemedView>
         <>
-          <Text>Mensagem</Text>
+          <ThemedText>Mensagem</ThemedText>
         </>
-      </View>
-      <View>
-        <View>
-          <Text>1k</Text>
-          <Text>Followers</Text>
-        </View>
-        <View>
+      </ThemedView>
+      <ThemedView>
+        <ThemedView>
+          <ThemedText>1k</ThemedText>
+          <ThemedText>Followers</ThemedText>
+        </ThemedView>
+        <ThemedView>
           <Image></Image>
-        </View>
-        <View>
-          <Text>342</Text>
-          <Text>Following</Text>
-        </View>
+        </ThemedView>
+        <ThemedView>
+          <ThemedText>342</ThemedText>
+          <ThemedText>Following</ThemedText>
+        </ThemedView>
 
-        <Text>@Catherine13</Text>
-        <Text>
+        <ThemedText>@Catherine13</ThemedText>
+        <ThemedText>
           My name is Catherine. I like dancing in the rain and travelling all
           around the world.
-        </Text>
+        </ThemedText>
         <>
-          <Text>Follow</Text>
+          <ThemedText>Follow</ThemedText>
         </>
         <>
-          <Text>Message</Text>
-        </>
-
-        <>
-          <Text>All</Text>
-        </>
-        <>
-          <Text>Photos</Text>
-        </>
-        <>
-          <Text>Videos</Text>
+          <ThemedText>Message</ThemedText>
         </>
 
-        <View>
-          <View>
+        <>
+          <ThemedText>All</ThemedText>
+        </>
+        <>
+          <ThemedText>Photos</ThemedText>
+        </>
+        <>
+          <ThemedText>Videos</ThemedText>
+        </>
+
+        <ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-          <View>
+          </ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-          <View>
+          </ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-          <View>
+          </ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-          <View>
+          </ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-          <View>
+          </ThemedView>
+          <ThemedView>
             <Image></Image>
-          </View>
-        </View>
-      </View>
-    </View>
+          </ThemedView>
+        </ThemedView>
+      </ThemedView>
+    </ThemedView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+  },
+});
 
 export default TelaPerfil;
