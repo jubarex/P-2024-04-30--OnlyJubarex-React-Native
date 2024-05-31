@@ -40,7 +40,7 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="CameraExpo"
+        name="CameraAlbum"
         options={{
           title: "Câmera",
           tabBarIcon: ({ color, focused }) => (

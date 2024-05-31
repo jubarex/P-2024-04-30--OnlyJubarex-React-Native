@@ -14,5 +14,5 @@
     "app/(tabs)/CameraExpo.js",
     "app/(tabs)/TelaPerfil.js",
     "app/(tabs)/TelaPagamento.js"
-  ]
+, "app/(tabs)/CameraAlbum.js"  ]
 }
