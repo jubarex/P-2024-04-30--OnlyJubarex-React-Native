@@ -13,6 +13,8 @@
     "expo-env.d.ts",
     "app/(tabs)/CameraExpo.js",
     "app/(tabs)/TelaPerfil.js",
-    "app/(tabs)/TelaPagamento.js"
-, "app/(tabs)/CameraAlbum.tsx", "app/(tabs)/CameraAlbum.jsx",  ]
+    "app/(tabs)/TelaPagamento.js",
+    "app/(tabs)/CameraAlbum.tsx",
+    "app/screens/CameraAlbum.jsx"
+  ]
 }

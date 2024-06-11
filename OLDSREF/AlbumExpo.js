@@ -1,13 +1,22 @@
-import { useState, useEffect } from 'react';
-import { Button, Text, SafeAreaView, ScrollView, StyleSheet, Image, View, Platform } from 'react-native';
-import * as MediaLibrary from 'expo-media-library';
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Text,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Image,
+  View,
+  Platform,
+} from "react-native";
+import * as MediaLibrary from "expo-media-library";
 
 export default function App() {
   const [albums, setAlbums] = useState(null);
   const [permissionResponse, requestPermission] = MediaLibrary.usePermissions();
 
   async function getAlbums() {
-    if (permissionResponse.status !== 'granted') {
+    if (permissionResponse.status !== "granted") {
       await requestPermission();
     }
     const fetchedAlbums = await MediaLibrary.getAlbumsAsync({
@@ -38,14 +47,18 @@ function AlbumEntry({ album }) {
   }, [album]);
 
   return (
-    <View key={album.id} style={styles.albumContainer}>
+    <View
+      // key={album.id}
+      style={styles.albumContainer}
+    >
       <Text>
-        {album.title} - {album.assetCount ?? 'no'} assets
+        {album.title} - {album.assetCount ?? "no"} assets
       </Text>
       <View style={styles.albumAssetsContainer}>
-        {assets && assets.map((asset) => (
-          <Image source={{ uri: asset.uri }} width={50} height={50} />
-        ))}
+        {assets &&
+          assets.map((asset) => (
+            <Image source={{ uri: asset.uri }} width={50} height={50} />
+          ))}
       </View>
     </View>
   );
@@ -55,11 +68,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     gap: 8,
-    justifyContent: 'center',
+    justifyContent: "center",
     ...Platform.select({
       android: {
-        paddingTop: 40
-      }
+        paddingTop: 40,
+      },
     }),
   },
   albumContainer: {
@@ -68,7 +81,7 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   albumAssetsContainer: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
+    flexDirection: "row",
+    flexWrap: "wrap",
   },
 });
