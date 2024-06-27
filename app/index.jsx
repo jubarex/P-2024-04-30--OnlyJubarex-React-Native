@@ -42,15 +42,7 @@ export default function Index() {
 
     const [autenticado, onAutenticar] = useState('')
 
-    useEffect(() => {
-        const connection = createConnection(serverUrl, roomId);
-        connection.connect();
 
-        getValueFor("token")
-        return () => {
-            connection.disconnect();
-        };
-    }, [autenticado]);
 
     const mostrarTela = async () => {
         await getValueFor(queryKey);
