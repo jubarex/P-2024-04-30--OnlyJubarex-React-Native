@@ -3,13 +3,14 @@ import { useState, useRef } from 'react';
 import { Button, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native';
 import * as MediaLibrary from 'expo-media-library';
 import * as FileSystem from 'expo-file-system';
+import { supabase } from '../../utils/supabase';
+import * as uuid from 'uuid';
 
 
 export default function App() {
   const [facing, setFacing] = useState('back');
   const [permission, requestPermission] = useCameraPermissions();
-  const [fotoTemp, setFotoTemp] = useState(undefined)
-
+  const [fotoTemp, setFotoTemp] = useState(undefined);
   const cameraTemp = useRef(null);
 
   if (!permission) {
@@ -22,7 +23,7 @@ export default function App() {
     return (
       <View style={styles.container}>
         <Text style={{ textAlign: 'center' }}>We need your permission to show the camera</Text>
-        <Button onPress={requestPermission} title="grant permission" />
+        <Button onPress={requestPermission} title="Grant Permission" />
       </View>
     );
   }
@@ -31,35 +32,71 @@ export default function App() {
     setFacing(current => (current === 'back' ? 'front' : 'back'));
   }
 
-
   async function savePhotoToLibraryAsync(foto) {
     if (!foto) {
       alert('No photo to save');
       return;
     }
-  
+
     // Decode base64 image data and save it to a file
     const photoUri = `${FileSystem.cacheDirectory}photo.jpg`;
     await FileSystem.writeAsStringAsync(photoUri, foto, {
       encoding: FileSystem.EncodingType.Base64,
     });
-  
+
     // Save the photo file to the media library
     const asset = await MediaLibrary.createAssetAsync(photoUri);
     await MediaLibrary.saveToLibraryAsync(asset);
   }
 
-  async function takePic(){
+
+  const uploadImage = async (uri) => {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    const arrayBuffer = await new Response(blob).arrayBuffer();
+    const fileName = `public/${Date.now()}.jpg`;
+    const { error } = await supabase
+      .storage
+      .from('midias')
+      .upload(fileName, arrayBuffer, { contentType: 'image/jpeg', upsert: false });
+    if (error) {
+      console.error('Error uploading image: ', error);
+    }
+  }
+
+
+
+  async function uploadToSupabase(base64Image) {
+    try {
+      const { data, error } = await supabase.storage
+        .from('midias')
+        .upload(`photos/${uuid.v4()}.jpg`, Buffer.from(base64Image, 'base64'), {
+          contentType: 'image/jpeg',
+        });
+
+      if (error) throw error;
+
+      Alert.alert('Success', 'Image uploaded successfully');
+      return data;
+    } catch (error) {
+      Alert.alert('Error', error.message);
+      console.error('Error uploading image:', error);
+    }
+  }
+
+  async function takePic() {
     if (cameraTemp.current) {
       const fotoAtual = await cameraTemp.current.takePictureAsync({
         exif: false,
         base64: true,
-        quality: 1,
+        quality: 0.2,
       });
+      console.log("photo", fotoAtual);
+      uploadImage(fotoAtual.uri)
+
       setFotoTemp('data:image/jpg;base64,' + fotoAtual.base64);
-      await savePhotoToLibraryAsync(fotoAtual.base64) 
-
-
+      await savePhotoToLibraryAsync(fotoAtual.base64);
+      await uploadToSupabase(fotoAtual.base64);
     }
   }
 
@@ -71,7 +108,7 @@ export default function App() {
             <Text style={styles.text}>Flip Camera</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.button} onPress={takePic}>
-            <Text style={styles.text}>Tirar Foto</Text>
+            <Text style={styles.text}>Take Picture</Text>
           </TouchableOpacity>
         </View>
       </CameraView>
