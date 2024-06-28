@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image, StyleSheet, TouchableOpacity } from 'react-native';
 import { supabase } from '../../utils/supabase'; // Assuming you have configured Supabase client
+
+
+import * as Clipboard from "expo-clipboard";
 
 const ImageListScreen = () => {
   const [imageList, setImageList] = useState([]);
+
+  const [copiedText, setCopiedText] = useState('');
+
+  const copyToClipboard = async (texto) => {
+    await Clipboard.setStringAsync(texto);
+  };
+
+
+
 
   useEffect(() => {
     fetchImages();
@@ -27,9 +39,12 @@ const ImageListScreen = () => {
 
   const renderItem = ({ item }) => (
     <View style={styles.imageContainer}>
-      <Image style={styles.image} source={{ uri: `https://mzzfbyxibvjzgpxvdbfm.supabase.co/storage/v1/object/public/midias/public/${item.name}` }} />
+      <TouchableOpacity onPress={() => copyToClipboard(`https://mzzfbyxibvjzgpxvdbfm.supabase.co/storage/v1/object/public/midias/public/${item.name}`)}>
+        <Image style={styles.image} source={{ uri: `https://mzzfbyxibvjzgpxvdbfm.supabase.co/storage/v1/object/public/midias/public/${item.name}` }} />
+      </TouchableOpacity>
     </View>
   );
+
 
   return (
     <View style={styles.container}>

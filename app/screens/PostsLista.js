@@ -11,9 +11,10 @@ import {
   Image,
   TouchableOpacity,
 } from "react-native";
+import { useRouter } from "expo-router";
 import { supabase } from "../../utils/supabase";
 
-const Posts = () => {
+const PostsLista = () => {
   const [posts, setPosts] = useState([]);
   const [userId, setUserId] = useState("1");
   const [postType, setPostType] = useState("2");
@@ -138,25 +139,9 @@ const Posts = () => {
       <Text style={styles.postText}>{item.content}</Text>
 
       {/* Media Content (Image or Video) */}
-      {item.imageUrl && (
-        <Image source={{ uri: item.imageUrl }} style={styles.postMedia} />
+      {item.image_url && (
+        <Image source={{ uri: item.image_url }} style={styles.postMedia} />
       )}
-
-      {/* Actions (Edit and Delete buttons) */}
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => selectPost(item)}
-        >
-          <Text style={styles.buttonText}>Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => deletePost(item.id)}
-        >
-          <Text style={styles.buttonText}>Delete</Text>
-        </TouchableOpacity>
-      </View>
 
       {/* Likes and Shares */}
       <View style={styles.likesSharesContainer}>
@@ -177,72 +162,42 @@ const Posts = () => {
     );
   };
 
+  const router = useRouter();
+
+  const irParaCriar = () => {
+    router.push("screens/CriarPost");
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Posts</Text>
+    <View style={{ flex: 1 }}>
       <ListaDePosts></ListaDePosts>
-      <ScrollView style={{ flex: 1, width: "100%" }}>
-        <Text style={styles.label}>User ID:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="User ID"
-          value={userId}
-          onChangeText={setUserId}
-        />
-        <Text style={styles.label}>Categoria:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Post Type"
-          value={postType}
-          onChangeText={setPostType}
-        />
-        <Text style={styles.label}>Conteúdo (Texto):</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Content"
-          value={content}
-          onChangeText={setContent}
-        />
-        <Text style={styles.label}>Número:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Number"
-          value={number}
-          onChangeText={setNumber}
-        />
-        <Text style={styles.label}>URL da imagem:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Image URL"
-          value={imageUrl}
-          onChangeText={setImageUrl}
-        />
-        <Text style={styles.label}>URL do video:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Video URL"
-          value={videoUrl}
-          onChangeText={setVideoUrl}
-        />
-        <Text style={styles.label}>Likes:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Likes"
-          value={likes}
-          onChangeText={setLikes}
-        />
-        <Text style={styles.label}>Shares:</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Shares"
-          value={shares}
-          onChangeText={setShares}
-        />
-        <Button
-          title={selectedPost ? "Update Post" : "Add Post"}
-          onPress={selectedPost ? updatePost : addPost}
-        />
-      </ScrollView>
+      <View>
+        <TouchableOpacity
+          style={{ height: 45, justifyContent: "center" }}
+          onPress={irParaCriar}
+        >
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              backgroundColor: "gray",
+              padding: 10,
+            }}
+          >
+            <Text
+              style={{
+                // flexDirection: "column",
+                textAlign: "center",
+
+                fontSize: 18,
+                color: "white",
+              }}
+            >
+              Novo Post (+)
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -359,4 +314,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Posts;
+export default PostsLista;

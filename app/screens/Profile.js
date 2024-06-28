@@ -8,6 +8,7 @@ import {
   FlatList,
   Alert,
   StyleSheet,
+  ScrollView,
 } from "react-native";
 
 import { supabase } from "../../utils/supabase";
@@ -135,52 +136,62 @@ const Profile = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Profiles</Text>
       <FlatList
+        style={{ flex: 1 }}
         data={profiles}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
       />
-      <TextInput
-        style={styles.input}
-        placeholder="First Name"
-        value={firstName}
-        onChangeText={setFirstName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Last Name"
-        value={lastName}
-        onChangeText={setLastName}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Bio"
-        value={bio}
-        onChangeText={setBio}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Location"
-        value={location}
-        onChangeText={setLocation}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Birthdate"
-        value={birthdate}
-        onChangeText={setBirthdate}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Profile Picture"
-        value={profilePicture}
-        onChangeText={setProfilePicture}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Cover Photo"
-        value={coverPhoto}
-        onChangeText={setCoverPhoto}
-      />
+      <ScrollView style={{ flex: 1 }}>
+        <Text style={styles.label}>First Name:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="First Name"
+          value={firstName}
+          onChangeText={setFirstName}
+        />
+        <Text style={styles.label}>Last Name:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Last Name"
+          value={lastName}
+          onChangeText={setLastName}
+        />
+        <Text style={styles.label}>Bio:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Bio"
+          value={bio}
+          onChangeText={setBio}
+        />
+        <Text style={styles.label}>Location:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Location"
+          value={location}
+          onChangeText={setLocation}
+        />
+        <Text style={styles.label}>Birthdate:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Birthdate"
+          value={birthdate}
+          onChangeText={setBirthdate}
+        />
+        <Text style={styles.label}>Profile Picture:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Profile Picture"
+          value={profilePicture}
+          onChangeText={setProfilePicture}
+        />
+        <Text style={styles.label}>Cover photo:</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Cover Photo"
+          value={coverPhoto}
+          onChangeText={setCoverPhoto}
+        />
+      </ScrollView>
       <Button
         title={selectedProfile ? "Update Profile" : "Add Profile"}
         onPress={selectedProfile ? updateProfile : addProfile}
@@ -221,6 +232,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     marginBottom: 10,
     paddingHorizontal: 10,
+  },
+  label: {
+    textAlign: "left",
+    width: "100%",
+    marginBottom: 5,
+    marginTop: 10,
   },
 });
 

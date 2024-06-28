@@ -180,7 +180,7 @@ const Posts = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Posts</Text>
-      <ListaDePosts></ListaDePosts>
+
       <ScrollView style={{ flex: 1, width: "100%" }}>
         <Text style={styles.label}>User ID:</Text>
         <TextInput
@@ -238,11 +238,11 @@ const Posts = () => {
           value={shares}
           onChangeText={setShares}
         />
-        <Button
-          title={selectedPost ? "Update Post" : "Add Post"}
-          onPress={selectedPost ? updatePost : addPost}
-        />
       </ScrollView>
+      <Button
+        title={selectedPost ? "Update Post" : "Add Post"}
+        onPress={selectedPost ? updatePost : addPost}
+      />
     </View>
   );
 };
