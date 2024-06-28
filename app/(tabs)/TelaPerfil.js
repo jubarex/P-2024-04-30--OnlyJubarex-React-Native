@@ -148,7 +148,7 @@ const TelaPerfil = () => {
   const router = useRouter();
 
   const goToTutorial = () => {
-    router.push("/screens/TutorialTela"); // Ensure this path is correct
+    router.push("/screens/Profile"); // Ensure this path is correct
   };
 
   const goToMensagens = () => {

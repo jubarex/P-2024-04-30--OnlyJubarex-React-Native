@@ -1,6 +1,15 @@
 // Profile.js
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, FlatList, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  Alert,
+  StyleSheet,
+} from "react-native";
+
 import { supabase } from "../../utils/supabase";
 
 const Profile = () => {
@@ -110,49 +119,64 @@ const Profile = () => {
     setCoverPhoto(profile.cover_photo);
   };
 
+  const renderItem = ({ item }) => (
+    <View style={styles.profileItem}>
+      <Text style={styles.profileText}>
+        {item.first_name} {item.last_name}
+      </Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Edit" onPress={() => selectProfile(item)} />
+        <Button title="Delete" onPress={() => deleteProfile(item.id)} />
+      </View>
+    </View>
+  );
+
   return (
-    <View>
-      <Text>Profiles</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Profiles</Text>
       <FlatList
         data={profiles}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Text>
-              {item.first_name} {item.last_name}
-            </Text>
-            <Button title="Edit" onPress={() => selectProfile(item)} />
-            <Button title="Delete" onPress={() => deleteProfile(item.id)} />
-          </View>
-        )}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
       />
       <TextInput
+        style={styles.input}
         placeholder="First Name"
         value={firstName}
         onChangeText={setFirstName}
       />
       <TextInput
+        style={styles.input}
         placeholder="Last Name"
         value={lastName}
         onChangeText={setLastName}
       />
-      <TextInput placeholder="Bio" value={bio} onChangeText={setBio} />
       <TextInput
+        style={styles.input}
+        placeholder="Bio"
+        value={bio}
+        onChangeText={setBio}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Location"
         value={location}
         onChangeText={setLocation}
       />
       <TextInput
+        style={styles.input}
         placeholder="Birthdate"
         value={birthdate}
         onChangeText={setBirthdate}
       />
       <TextInput
+        style={styles.input}
         placeholder="Profile Picture"
         value={profilePicture}
         onChangeText={setProfilePicture}
       />
       <TextInput
+        style={styles.input}
         placeholder="Cover Photo"
         value={coverPhoto}
         onChangeText={setCoverPhoto}
@@ -164,5 +188,40 @@ const Profile = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  profileItem: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+  },
+  profileText: {
+    fontSize: 18,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  input: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+  },
+});
 
 export default Profile;

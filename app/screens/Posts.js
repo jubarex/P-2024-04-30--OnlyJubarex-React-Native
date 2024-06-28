@@ -1,6 +1,13 @@
-// Posts.js
 import React, { useState, useEffect } from "react";
-import { View, Text, TextInput, Button, FlatList, Alert } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  Button,
+  FlatList,
+  Alert,
+  StyleSheet,
+} from "react-native";
 import { supabase } from "../../utils/supabase";
 
 const Posts = () => {
@@ -109,48 +116,72 @@ const Posts = () => {
     setShares(post.shares);
   };
 
+  const renderItem = ({ item }) => (
+    <View style={styles.postItem}>
+      <Text style={styles.postText}>{item.content}</Text>
+      <View style={styles.buttonContainer}>
+        <Button title="Edit" onPress={() => selectPost(item)} />
+        <Button title="Delete" onPress={() => deletePost(item.id)} />
+      </View>
+    </View>
+  );
+
   return (
-    <View style={{ justifyContent: "center", alignItems: "center", flex: 1 }}>
-      <Text>Posts</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>Posts</Text>
       <FlatList
         data={posts}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View>
-            <Text>{item.content}</Text>
-            <Button title="Edit" onPress={() => selectPost(item)} />
-            <Button title="Delete" onPress={() => deletePost(item.id)} />
-          </View>
-        )}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={renderItem}
       />
       <TextInput
+        style={styles.input}
         placeholder="User ID"
         value={userId}
         onChangeText={setUserId}
       />
       <TextInput
+        style={styles.input}
         placeholder="Post Type"
         value={postType}
         onChangeText={setPostType}
       />
       <TextInput
+        style={styles.input}
         placeholder="Content"
         value={content}
         onChangeText={setContent}
       />
-      <TextInput placeholder="Number" value={number} onChangeText={setNumber} />
       <TextInput
+        style={styles.input}
+        placeholder="Number"
+        value={number}
+        onChangeText={setNumber}
+      />
+      <TextInput
+        style={styles.input}
         placeholder="Image URL"
         value={imageUrl}
         onChangeText={setImageUrl}
       />
       <TextInput
+        style={styles.input}
         placeholder="Video URL"
         value={videoUrl}
         onChangeText={setVideoUrl}
       />
-      <TextInput placeholder="Likes" value={likes} onChangeText={setLikes} />
-      <TextInput placeholder="Shares" value={shares} onChangeText={setShares} />
+      <TextInput
+        style={styles.input}
+        placeholder="Likes"
+        value={likes}
+        onChangeText={setLikes}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Shares"
+        value={shares}
+        onChangeText={setShares}
+      />
       <Button
         title={selectedPost ? "Update Post" : "Add Post"}
         onPress={selectedPost ? updatePost : addPost}
@@ -158,5 +189,45 @@ const Posts = () => {
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  postItem: {
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#f0f0f0",
+    borderRadius: 5,
+    width: "100%",
+  },
+  postText: {
+    fontSize: 16,
+    marginBottom: 5,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    borderRadius: 5,
+    marginBottom: 10,
+    paddingHorizontal: 10,
+    width: "100%",
+  },
+});
 
 export default Posts;
